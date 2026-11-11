@@ -9,6 +9,7 @@
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -18,5 +19,5 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "prisma/seed.ts"]
+  "include": ["src/**/*"]
 }

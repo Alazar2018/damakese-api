@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Seat {
+  id           String   @id
+  email        String   @unique
+  name         String
+  role         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Day {
+  id         String    @id
+  name       String
+  kind       String
+  client     String    @default("")
+  venue      String    @default("")
+  date       String
+  doors      String    @default("18:00")
+  status     String    @default("planning")
+  visibility String    @default("internal")
+  crew       Int       @default(0)
+  note       String    @default("")
+  imagePath  String    @default("")
+  imageAlt   String    @default("")
+  createdAt  DateTime   @default(now())
+  run        RunItem[]
+  photos     DayPhoto[]
+}
+
+model DayPhoto {
+  id    String @id
+  dayId String
+  day   Day    @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  path  String
+  alt   String @default("")
+  sort  Int    @default(0)
+}
+
+model Brief {
+  id           String   @id
+  name         String
+  organisation String
+  email        String
+  phone        String   @default("")
+  kind         String
+  date         String   @default("")
+  city         String   @default("")
+  brief        String
+  status       String   @default("new")
+  receivedAt   DateTime @default(now())
+}
+
+model Client {
+  id           String @id
+  organisation String
+  contact      String
+  email        String @default("")
+  note         String @default("")
+}
+
+model RunItem {
+  id    String @id
+  dayId String
+  day   Day    @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  time  String
+  task  String
+  owner String @default("")
+  state String @default("open")
+}

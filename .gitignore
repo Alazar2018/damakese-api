@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+data/*.db
+data/*.db-journal
+data/photos/*
+!data/photos/.gitkeep
+data/outbox/*
+!data/outbox/.gitkeep

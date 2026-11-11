@@ -1,3 +1,4 @@
+import "./env";
 import "reflect-metadata";
 import { mkdir } from "fs/promises";
 import path from "path";

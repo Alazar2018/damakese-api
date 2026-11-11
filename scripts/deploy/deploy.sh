@@ -43,5 +43,6 @@ fi
 pm2 save
 
 sleep 2
-curl -sf "http://127.0.0.1:4000/days" >/dev/null && echo "API OK" || echo "WARN: API check failed"
+PORT="$(grep -E '^PORT=' .env | cut -d= -f2 | tr -d '"')"
+curl -sf "http://127.0.0.1:${PORT:-4000}/days" >/dev/null && echo "API OK" || echo "WARN: API check failed"
 echo "==> API deploy finished"

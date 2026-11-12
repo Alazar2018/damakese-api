@@ -22,7 +22,7 @@ async function bootstrap() {
     origin: (process.env.WEB_ORIGIN || "http://localhost:3456").split(","),
     credentials: true,
   });
-  app.useStaticAssets(photos, { prefix: "/photos" });
+  app.useStaticAssets(photos, { prefix: "/photos", maxAge: "7d", immutable: true });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

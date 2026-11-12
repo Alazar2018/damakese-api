@@ -37,7 +37,8 @@ export class AuthController {
   }
 
   @Get("me")
-  me(@CurrentUser() user: SessionUser | null) {
+  me(@CurrentUser() user: SessionUser | null, @Res({ passthrough: true }) res: Response) {
+    res.setHeader("Cache-Control", "private, no-store");
     return { user };
   }
 }

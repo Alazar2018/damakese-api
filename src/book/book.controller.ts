@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
+import type { Response } from "express";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { BookService } from "./book.service";
 import { BriefDto, ClientDto, DayDto, ImportDto, PhotoAltDto, RunDto } from "./shapes";
@@ -20,7 +22,9 @@ export class BookController {
   constructor(private readonly book: BookService) {}
 
   @Get("days")
-  days(@CurrentUser() user: SessionUser | null) {
+  days(@CurrentUser() user: SessionUser | null, @Res({ passthrough: true }) res: Response) {
+    if (user) res.setHeader("Cache-Control", "private, no-store");
+    else res.setHeader("Cache-Control", "public, max-age=120, stale-while-revalidate=600");
     return this.book.days(Boolean(user));
   }
 
